@@ -40,7 +40,8 @@ public class ItemEntity {
   private String descripton;
 
   @NotNull
-  private BigDecimal coust;
+  private BigDecimal amount;
 
-  private String friend;
+  private String person;
+
 }

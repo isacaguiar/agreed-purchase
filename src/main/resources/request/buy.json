@@ -1,0 +1,21 @@
+{
+  "discount": 9.8,
+  "itemRequests": [
+    {
+      "amount": 8.70,
+      "descripton": "Suco",
+      "person": "Eu"
+    },
+    {
+      "amount": 12.50,
+      "descripton": "Refrigerante",
+      "person": "Carlos"
+    },
+    {
+      "amount": 28.90,
+      "descripton": "Hamburguer",
+      "person": "Carlos"
+    }
+  ],
+  "rate": 5.5
+}
