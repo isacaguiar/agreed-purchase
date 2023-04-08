@@ -1,5 +1,8 @@
 package br.com.agreedpurchase.domain.exception;
 
+import lombok.Getter;
+
+@Getter
 public class BusinessException extends RuntimeException {
 
   private String message;
