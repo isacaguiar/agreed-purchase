@@ -5,7 +5,6 @@ import br.com.agreedpurchase.adapter.controller.response.PurchaseDataResponse;
 import br.com.agreedpurchase.domain.exception.InvalidDiscountTypeException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.service.BuyService;
-import br.com.agreedpurchase.domain.service.BuyServiceImpl;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
