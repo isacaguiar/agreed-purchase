@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.service.BuyService;
+import br.com.agreedpurchase.domain.service.BuyServiceImpl;
 import br.com.agreedpurchase.utils.FileUtils;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,7 +30,7 @@ class BuyControllerTest {
   private MockMvc mvc;
 
   @MockBean
-  BuyService buyService;
+  BuyServiceImpl buyService;
 
   final String PATH = "/buy";
 
@@ -38,7 +38,7 @@ class BuyControllerTest {
   void shouldBuyWithSuccess() throws Exception {
 
     Buy buy = Buy.builder()
-        .rate(new BigDecimal(10))
+        .fee(new BigDecimal(10))
         .date(new Date())
         .discount(new BigDecimal(5))
         .items(new HashSet<>())

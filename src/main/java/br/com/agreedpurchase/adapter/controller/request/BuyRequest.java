@@ -3,6 +3,7 @@ package br.com.agreedpurchase.adapter.controller.request;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import org.springframework.beans.BeanUtils;
 @AllArgsConstructor
 public class BuyRequest {
 
-  private BigDecimal rate;
+  private BigDecimal fee;
   private BigDecimal discount;
 
   private String discountType;
@@ -27,7 +28,8 @@ public class BuyRequest {
     Buy buy = Buy.builder()
         .discount(discount)
         .discountType(discountType)
-        .rate(rate)
+        .fee(fee)
+        .date(new Date())
         .build();
 
     if(this.itemRequests != null) {

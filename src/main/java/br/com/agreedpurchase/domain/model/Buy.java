@@ -5,6 +5,7 @@ import br.com.agreedpurchase.adapter.persistence.entity.ItemEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Buy {
-  private BigDecimal rate;
+  private BigDecimal fee;
   private BigDecimal discount;
 
   private String discountType;
@@ -27,10 +28,15 @@ public class Buy {
 
   private Set<Item> items;
 
+  Map<String, BigDecimal> mapPerson;
+
+  Map<String, BigDecimal> mapPersonAddFee;
+
   public BuyEntity toEntity() {
     BuyEntity buyEntity = BuyEntity.builder()
         .discount(discount)
-        .rate(rate)
+        .discountType(discountType)
+        .fee(fee)
         .date(new Date())
         .build();
 

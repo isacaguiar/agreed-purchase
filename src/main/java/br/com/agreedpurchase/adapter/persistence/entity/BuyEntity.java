@@ -13,10 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,10 +42,13 @@ public class BuyEntity {
   private Date date;
 
   @NotNull
-  private BigDecimal rate;
+  private BigDecimal fee;
 
   @NotNull
   private BigDecimal discount;
+
+  @NotNull
+  private String discountType;
 
   @OneToMany(mappedBy = "buy", cascade=CascadeType.PERSIST)
   private Set<ItemEntity> itemEntities;
@@ -56,7 +56,8 @@ public class BuyEntity {
   public Buy toModel() {
     Buy buy = Buy.builder()
         .discount(discount)
-        .rate(rate)
+        .discountType(discountType)
+        .fee(fee)
         .build();
 
     if(itemEntities != null) {

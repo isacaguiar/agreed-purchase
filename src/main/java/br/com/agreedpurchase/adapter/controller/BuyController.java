@@ -2,8 +2,10 @@ package br.com.agreedpurchase.adapter.controller;
 
 import br.com.agreedpurchase.adapter.controller.request.BuyRequest;
 import br.com.agreedpurchase.adapter.controller.response.PurchaseDataResponse;
+import br.com.agreedpurchase.domain.exception.InvalidDiscountTypeException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.service.BuyService;
+import br.com.agreedpurchase.domain.service.BuyServiceImpl;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,12 @@ public class BuyController {
   public PurchaseDataResponse buy(@Valid @RequestBody BuyRequest buyRequest) {
 
     log.info("Process buy initialized");
+    Buy buy = null;
+    try {
+      buy = buyService.buy(buyRequest.toModel());
+    } catch (InvalidDiscountTypeException e) {
 
-    Buy buy = buyService.buy(buyRequest.toModel());
+    }
 
     log.info("Successful purchase");
 
