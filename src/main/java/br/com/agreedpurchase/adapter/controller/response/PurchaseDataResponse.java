@@ -1,20 +1,22 @@
 package br.com.agreedpurchase.adapter.controller.response;
 
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.model.Item;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PurchaseDataResponse implements Serializable {
 
   private Date date;

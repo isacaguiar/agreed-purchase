@@ -11,8 +11,11 @@ class AgreedPurchaseApplicationTest {
 
   @Test
   void testConfigure() {
-    String[] args = {""};
+    String[] args = new String[] {};
     Runnable runnable = () -> AgreedPurchaseApplication.main(args);
+
+    AgreedPurchaseApplication.main(args);
+
     assertNotNull(runnable);
   }
 

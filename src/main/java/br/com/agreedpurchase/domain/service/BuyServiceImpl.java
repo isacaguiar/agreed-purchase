@@ -1,6 +1,7 @@
 package br.com.agreedpurchase.domain.service;
 
 import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
+import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.exception.InvalidDiscountTypeException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
@@ -35,7 +36,7 @@ public class BuyServiceImpl implements BuyService {
     return buy;
   }
 
-  private Map<String, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {
+  protected Map<String, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {
     Map<String, BigDecimal> mapPersonAddFee = new HashMap<>();
     for (Map.Entry<String, BigDecimal> entry : buy.getMapPerson().entrySet()) {
       BigDecimal amountAdjustment = calculatePercent(entry.getValue(), amount, getAmountWithoutFees(buy));
@@ -49,7 +50,7 @@ public class BuyServiceImpl implements BuyService {
     return mapPersonAddFee;
   }
 
-  protected BigDecimal addFeeAndDiscount(Buy buy) throws InvalidDiscountTypeException {
+  protected BigDecimal addFeeAndDiscount(Buy buy) throws BusinessException {
     BigDecimal amount = getAmountWithoutFees(buy);
     log.info("Amount: ".concat(amount.toString()));
 
@@ -63,7 +64,7 @@ public class BuyServiceImpl implements BuyService {
         log.info("Applied percent: ".concat(amount.toString()));
         break;
       default:
-        throw new InvalidDiscountTypeException(buy.getDiscountType());
+        throw new BusinessException("Invalid discount type");
     }
     return amount.subtract(buy.getDiscount());
   }
