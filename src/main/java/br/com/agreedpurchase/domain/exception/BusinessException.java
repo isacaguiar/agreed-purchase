@@ -2,16 +2,11 @@ package br.com.agreedpurchase.domain.exception;
 
 import lombok.Getter;
 
-@Getter
 public class BusinessException extends RuntimeException {
 
-  private String message;
+  private final String message;
 
-  public BusinessException(Throwable e) {
-    super(e);
-  }
-
-  public BusinessException(String message, Throwable e) {
+  public BusinessException(Throwable e, String message) {
     super(e);
     this.message = message;
   }
@@ -20,4 +15,5 @@ public class BusinessException extends RuntimeException {
     super();
     this.message = message;
   }
+
 }
