@@ -2,7 +2,6 @@ package br.com.agreedpurchase.domain.service;
 
 import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
 import br.com.agreedpurchase.domain.exception.BusinessException;
-import br.com.agreedpurchase.domain.exception.InvalidDiscountTypeException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
 import br.com.agreedpurchase.domain.port.PersistencePort;
@@ -21,7 +20,7 @@ public class BuyServiceImpl implements BuyService {
   @Autowired
   PersistencePort persistencePort;
 
-  public Buy buy(Buy buy) throws InvalidDiscountTypeException {
+  public Buy buy(Buy buy) throws BusinessException {
     BuyEntity buyEntity = persistencePort.buy(buy.toEntity());
 
     //Agroup amount by person

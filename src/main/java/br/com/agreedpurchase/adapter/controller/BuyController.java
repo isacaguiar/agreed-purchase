@@ -5,7 +5,6 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import br.com.agreedpurchase.adapter.controller.request.BuyRequest;
 import br.com.agreedpurchase.adapter.controller.response.PurchaseDataResponse;
 import br.com.agreedpurchase.domain.exception.BusinessException;
-import br.com.agreedpurchase.domain.exception.InvalidDiscountTypeException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.service.BuyService;
 import javax.validation.Valid;
