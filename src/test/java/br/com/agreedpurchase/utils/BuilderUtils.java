@@ -1,17 +1,36 @@
 package br.com.agreedpurchase.utils;
 
+import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
+import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
+
 import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
 import br.com.agreedpurchase.adapter.persistence.entity.ItemEntity;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class BuilderUtils {
+
+  public static List<Buy> loadPurchases() {
+    List<Buy> list = new ArrayList<>();
+    list.add(loadBuyWithMapPersonAndFee(PERCENT));
+    list.add(loadBuyWithMapPersonAndFee(DELIVERY));
+    return list;
+  }
+
+  public static List<BuyEntity> loadBuyEntities() {
+    List<BuyEntity> list = new ArrayList<>();
+    list.add(getBuyEntityWithItems(new BigDecimal(10), new BigDecimal(8), PERCENT));
+    list.add(getBuyEntityWithItems(new BigDecimal(10), new BigDecimal(8), DELIVERY));
+    return list;
+  }
 
   public static Buy getBuyWhitItems(BigDecimal fee, BigDecimal discount, String discountType) {
     return Buy.builder()
@@ -59,6 +78,7 @@ public class BuilderUtils {
 
   public static BuyEntity getBuyEntityWithItems(BigDecimal fee, BigDecimal discount, String discountType) {
     return BuyEntity.builder()
+        .id(1L)
         .date(new Date())
         .discount(discount)
         .discountType(discountType)
@@ -125,6 +145,7 @@ public class BuilderUtils {
 
   public static ItemEntity getItemEntity(BigDecimal amount, String person, String description) {
     return ItemEntity.builder()
+        .id(new Date().getTime())
         .descripton(description)
         .amount(amount)
         .person(person)

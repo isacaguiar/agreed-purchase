@@ -7,8 +7,11 @@ import br.com.agreedpurchase.domain.model.Item;
 import br.com.agreedpurchase.domain.port.PersistencePort;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,12 @@ public class BuyServiceImpl implements BuyService {
   public Buy buy(Buy buy) throws BusinessException {
     BuyEntity buyEntity = persistencePort.buy(buy.toEntity());
 
+    process(buy, buyEntity);
+
+    return buy;
+  }
+
+  private void process(Buy buy, BuyEntity buyEntity) {
     //Agroup amount by person
     buy.setMapPerson(groupAmountByPerson(buyEntity.toModel()));
 
@@ -31,8 +40,35 @@ public class BuyServiceImpl implements BuyService {
 
     //Add ammount after fee and discount
     buy.setMapPersonAddFee(addFeeAndDiscountForPerson(buy, amount));
+  }
 
+  public Buy loadById(Long id) throws BusinessException {
+    Buy buy;
+    Optional<BuyEntity> optionalBuyEntity = persistencePort.getBuyEntityById(id);
+    if (optionalBuyEntity.isPresent()) {
+      BuyEntity buyEntity = optionalBuyEntity.get();
+      buy = buyEntity.toModel();
+      process(buy, buyEntity);
+    } else {
+      throw new BusinessException("Purchase Not Found");
+    }
     return buy;
+  }
+
+  public List<Buy> loadAll() throws BusinessException {
+    Buy buy;
+    List<Buy> list = new ArrayList<>();
+    List<BuyEntity> buyEntities = persistencePort.getBuyEntities();
+    for (BuyEntity buyEntity : buyEntities) {
+      buy = buyEntity.toModel();
+      process(buy, buyEntity);
+      list.add(buy);
+    }
+    return list;
+  }
+
+  public void delete(Long id) throws BusinessException {
+    persistencePort.deleteBuyEntityById(id);
   }
 
   protected Map<String, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {

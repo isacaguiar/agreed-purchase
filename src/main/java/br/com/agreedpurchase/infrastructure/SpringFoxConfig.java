@@ -1,4 +1,4 @@
-package br.com.agreedpurchase.domain.service.infrastructure;
+package br.com.agreedpurchase.infrastructure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
