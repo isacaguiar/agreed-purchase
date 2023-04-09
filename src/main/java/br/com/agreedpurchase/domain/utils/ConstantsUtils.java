@@ -1,6 +1,9 @@
 package br.com.agreedpurchase.domain.utils;
 
-public abstract class ConstantsUtils {
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public final class ConstantsUtils {
 
   public static final String DELIVERY = "DELIVERY";
   public static final String PERCENT = "PERCENT";

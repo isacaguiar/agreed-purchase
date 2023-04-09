@@ -1,5 +1,8 @@
 package br.com.agreedpurchase.domain.service;
 
+import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
+import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
+
 import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
@@ -90,11 +93,11 @@ public class BuyServiceImpl implements BuyService {
     log.info("Amount: ".concat(amount.toString()));
 
     switch (buy.getDiscountType().toUpperCase()) {
-      case "DELIVERY":
+      case DELIVERY:
         amount = amount.add(buy.getFee());
         log.info("Applied delivery: ".concat(amount.toString()));
         break;
-      case "PERCENT":
+      case PERCENT:
         amount = amount.add(calculatePercent(amount , buy.getDiscount(), new BigDecimal(100)));
         log.info("Applied percent: ".concat(amount.toString()));
         break;
