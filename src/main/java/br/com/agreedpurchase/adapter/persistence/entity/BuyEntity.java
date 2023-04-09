@@ -50,7 +50,7 @@ public class BuyEntity {
   @NotNull
   private String discountType;
 
-  @OneToMany(mappedBy = "buy", cascade=CascadeType.PERSIST)
+  @OneToMany(mappedBy = "buy", cascade=CascadeType.ALL, orphanRemoval = true)
   private Set<ItemEntity> itemEntities;
 
   public Buy toModel() {
