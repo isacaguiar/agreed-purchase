@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import br.com.agreedpurchase.adapter.controller.response.PurchaseDataResponse;
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.service.BuyServiceImpl;
+import br.com.agreedpurchase.domain.service.impl.BuyServiceImpl;
 import br.com.agreedpurchase.utils.BuilderUtils;
 import br.com.agreedpurchase.utils.FileUtils;
 import br.com.agreedpurchase.utils.JSONUtils;

@@ -19,6 +19,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Buy {
+
+  private Long id;
   private BigDecimal fee;
   private BigDecimal discount;
 
@@ -28,9 +30,9 @@ public class Buy {
 
   private Set<Item> items;
 
-  Map<String, BigDecimal> mapPerson;
+  Map<Long, BigDecimal> mapPerson;
 
-  Map<String, BigDecimal> mapPersonAddFee;
+  Map<Long, BigDecimal> mapPersonAddFee;
 
   public BuyEntity toEntity() {
     BuyEntity buyEntity = BuyEntity.builder()
@@ -45,7 +47,7 @@ public class Buy {
         ItemEntity itemEntity = ItemEntity.builder()
             .amount(item.getAmount())
             .descripton(item.getDescripton())
-            .person(item.getPerson())
+            .friend(item.getFriend() != null ? item.getFriend().toEntity() : null)
             .buy(buyEntity)
             .build();
         if (buyEntity.getItemEntities() == null) {

@@ -18,6 +18,8 @@ import org.springframework.beans.BeanUtils;
 @AllArgsConstructor
 public class BuyRequest {
 
+  private Long userId;
+
   private BigDecimal fee;
   private BigDecimal discount;
 

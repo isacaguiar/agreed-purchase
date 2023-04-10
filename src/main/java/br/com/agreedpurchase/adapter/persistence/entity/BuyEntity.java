@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,13 +32,20 @@ import org.springframework.beans.BeanUtils;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "buy")
+@Table(name = "ap_buy")
 public class BuyEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(nullable = false, unique = true)
   private Long id;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+  private UserEntity user;
+
+  @OneToMany(mappedBy = "buy", cascade=CascadeType.ALL, orphanRemoval = true)
+  private Set<ItemEntity> itemEntities;
 
   @Temporal(TemporalType.DATE)
   private Date date;
@@ -49,9 +58,6 @@ public class BuyEntity {
 
   @NotNull
   private String discountType;
-
-  @OneToMany(mappedBy = "buy", cascade=CascadeType.ALL, orphanRemoval = true)
-  private Set<ItemEntity> itemEntities;
 
   public Buy toModel() {
     Buy buy = Buy.builder()

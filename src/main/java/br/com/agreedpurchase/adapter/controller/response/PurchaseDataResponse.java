@@ -34,10 +34,10 @@ public class PurchaseDataResponse implements Serializable {
     discountType = buy.getDiscountType();
     consumerDataResponses = new ArrayList<>();
     if(buy.getMapPerson() != null) {
-      for(Map.Entry<String, BigDecimal> entry : buy.getMapPerson().entrySet()) {
+      for(Map.Entry<Long, BigDecimal> entry : buy.getMapPerson().entrySet()) {
         ConsumerDataResponse consumerDataResponse =
             ConsumerDataResponse.builder()
-                .name(entry.getKey())
+                //.name(entry.getKey())
                 .amount(entry.getValue())
                 .build();
         consumerDataResponses.add(consumerDataResponse);
@@ -45,10 +45,10 @@ public class PurchaseDataResponse implements Serializable {
     }
     amountToPayResponses = new ArrayList<>();
     if(buy.getMapPersonAddFee() != null) {
-      for(Map.Entry<String, BigDecimal> entry : buy.getMapPersonAddFee().entrySet()) {
+      for(Map.Entry<Long, BigDecimal> entry : buy.getMapPersonAddFee().entrySet()) {
         AmountToPayResponse amountToPayResponse =
             AmountToPayResponse.builder()
-                .name(entry.getKey())
+                //.name(entry.getKey())
                 .amount(entry.getValue())
                 .build();
         amountToPayResponses.add(amountToPayResponse);

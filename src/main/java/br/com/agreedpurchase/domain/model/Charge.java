@@ -12,8 +12,12 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
-  private String descripton;
-  private BigDecimal amount;
+public class Charge {
+
+  private Long id;
+  private Item item;
   private Friend friend;
+  private BigDecimal amount;
+
+  //private ChargeE
 }

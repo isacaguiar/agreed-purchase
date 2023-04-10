@@ -1,4 +1,4 @@
-package br.com.agreedpurchase.domain.service;
+package br.com.agreedpurchase.domain.service.impl;
 
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
@@ -8,6 +8,7 @@ import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
 import br.com.agreedpurchase.domain.port.PersistencePort;
+import br.com.agreedpurchase.domain.service.BuyService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -74,16 +75,13 @@ public class BuyServiceImpl implements BuyService {
     persistencePort.deleteBuyEntityById(id);
   }
 
-  protected Map<String, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {
-    Map<String, BigDecimal> mapPersonAddFee = new HashMap<>();
-    for (Map.Entry<String, BigDecimal> entry : buy.getMapPerson().entrySet()) {
+  protected Map<Long, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {
+    Map<Long, BigDecimal> mapPersonAddFee = new HashMap<>();
+    for (Map.Entry<Long, BigDecimal> entry : buy.getMapPerson().entrySet()) {
       BigDecimal amountAdjustment = calculatePercent(entry.getValue(), amount, getAmountWithoutFees(buy));
       log.info("Adjustment: ".concat(amountAdjustment.toString()));
       mapPersonAddFee.put(entry.getKey(), amountAdjustment);
-      log.info("Person: "
-          .concat(entry.getKey())
-          .concat(" | Amount adjustment: ")
-          .concat(amountAdjustment.toString()));
+      log.info("Amount adjustment: ".concat(amountAdjustment.toString()));
     }
     return mapPersonAddFee;
   }
@@ -117,12 +115,18 @@ public class BuyServiceImpl implements BuyService {
     return amount.setScale(2, RoundingMode.HALF_UP);
   }
 
-  protected Map<String, BigDecimal> groupAmountByPerson(Buy buy) {
-    Map<String, BigDecimal> mapPerson = new HashMap<>();
+  protected Map<Long, BigDecimal> groupAmountByPerson(Buy buy) {
+    Map<Long, BigDecimal> mapPerson = new HashMap<>();
     for ( Item i : buy.getItems() ) {
-      BigDecimal amount = mapPerson.get(i.getPerson()) == null
-          ? i.getAmount() : mapPerson.get(i.getPerson()).add(i.getAmount());
-      mapPerson.put(i.getPerson(), amount);
+      if(i.getFriend() != null) {
+        BigDecimal amount = mapPerson.get(i.getFriend().getId()) == null
+            ? i.getAmount() : mapPerson.get(i.getFriend().getId()).add(i.getAmount());
+        mapPerson.put(i.getFriend().getId(), amount);
+      } else {
+        BigDecimal amount = mapPerson.get(0L) == null
+            ? i.getAmount() : mapPerson.get(0L).add(i.getAmount());
+        mapPerson.put(0L, amount);
+      }
     }
     return mapPerson;
   }

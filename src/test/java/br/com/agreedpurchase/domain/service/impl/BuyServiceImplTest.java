@@ -1,4 +1,4 @@
-package br.com.agreedpurchase.domain.service;
+package br.com.agreedpurchase.domain.service.impl;
 
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.INVALID;
@@ -16,6 +16,7 @@ import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.port.PersistencePort;
+import br.com.agreedpurchase.domain.service.impl.BuyServiceImpl;
 import br.com.agreedpurchase.utils.BuilderUtils;
 import java.math.BigDecimal;
 import java.util.Map;
@@ -58,7 +59,7 @@ class BuyServiceImplTest {
   @Test
   void shouldSuccessWhenExecuteAddFeeAndDiscountForPerson() {
     BigDecimal amount = new BigDecimal(100);
-    Map<String, BigDecimal> mapPersonAddFee =
+    Map<Long, BigDecimal> mapPersonAddFee =
         buyService.addFeeAndDiscountForPerson(BuilderUtils.loadBuyWithMapPerson(PERCENT), amount);
 
     assertNotNull(mapPersonAddFee);
@@ -104,7 +105,7 @@ class BuyServiceImplTest {
 
   @Test
   void shouldSuccessWhenGroupByPerson() {
-    Map<String, BigDecimal> mapPerson =
+    Map<Long, BigDecimal> mapPerson =
         buyService.groupAmountByPerson(BuilderUtils.loadBuy(PERCENT));
     assertNotNull(mapPerson);
     assertEquals(2 , mapPerson.size());

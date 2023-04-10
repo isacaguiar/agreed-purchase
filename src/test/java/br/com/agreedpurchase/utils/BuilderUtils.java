@@ -63,7 +63,7 @@ public class BuilderUtils {
     return Item.builder()
         .descripton(description)
         .amount(amount)
-        .person(person)
+        //.person(person)
         .build();
   }
 
@@ -109,7 +109,7 @@ public class BuilderUtils {
     items.add(getItem(new BigDecimal(25), "Carla", "Hamburguer"));
 
     Buy buy = getBuy(new BigDecimal(10), new BigDecimal(8), discountType);
-    buy.setMapPerson(map);
+    //buy.setMapPerson(map);
     buy.setItems(items);
     return buy;
   }
@@ -129,9 +129,9 @@ public class BuilderUtils {
     items.add(getItem(new BigDecimal(25), "Carla", "Hamburguer"));
 
     Buy buy = getBuy(new BigDecimal(10), new BigDecimal(8), discountType);
-    buy.setMapPerson(map);
+    //buy.setMapPerson(map);
     buy.setItems(items);
-    buy.setMapPersonAddFee(mapFee);
+    //buy.setMapPersonAddFee(mapFee);
     return buy;
   }
 
@@ -148,7 +148,7 @@ public class BuilderUtils {
         .id(new Date().getTime())
         .descripton(description)
         .amount(amount)
-        .person(person)
+        //.person(person)
         .build();
   }
 }
