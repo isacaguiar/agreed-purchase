@@ -1,10 +1,7 @@
 package br.com.agreedpurchase.domain.model;
 
-import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
-import br.com.agreedpurchase.adapter.persistence.entity.ItemEntity;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -31,30 +28,4 @@ public class Buy {
   Map<String, BigDecimal> mapPerson;
 
   Map<String, BigDecimal> mapPersonAddFee;
-
-  public BuyEntity toEntity() {
-    BuyEntity buyEntity = BuyEntity.builder()
-        .discount(discount)
-        .discountType(discountType)
-        .fee(fee)
-        .date(new Date())
-        .build();
-
-    if (items != null) {
-      for (Item item : items) {
-        ItemEntity itemEntity = ItemEntity.builder()
-            .amount(item.getAmount())
-            .descripton(item.getDescripton())
-            .person(item.getPerson())
-            .buy(buyEntity)
-            .build();
-        if (buyEntity.getItemEntities() == null) {
-          buyEntity.setItemEntities(new HashSet<>());
-        }
-        buyEntity.getItemEntities().add(itemEntity);
-      }
-    }
-
-    return buyEntity;
-  }
 }

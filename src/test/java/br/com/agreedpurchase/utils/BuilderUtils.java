@@ -3,8 +3,6 @@ package br.com.agreedpurchase.utils;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
 
-import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
-import br.com.agreedpurchase.adapter.persistence.entity.ItemEntity;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
 import java.math.BigDecimal;
@@ -22,13 +20,6 @@ public class BuilderUtils {
     List<Buy> list = new ArrayList<>();
     list.add(loadBuyWithMapPersonAndFee(PERCENT));
     list.add(loadBuyWithMapPersonAndFee(DELIVERY));
-    return list;
-  }
-
-  public static List<BuyEntity> loadBuyEntities() {
-    List<BuyEntity> list = new ArrayList<>();
-    list.add(getBuyEntityWithItems(new BigDecimal(10), new BigDecimal(8), PERCENT));
-    list.add(getBuyEntityWithItems(new BigDecimal(10), new BigDecimal(8), DELIVERY));
     return list;
   }
 
@@ -64,26 +55,6 @@ public class BuilderUtils {
         .descripton(description)
         .amount(amount)
         .person(person)
-        .build();
-  }
-
-  public static BuyEntity getBuyEntity(BigDecimal fee, BigDecimal discount, String discountType) {
-    return BuyEntity.builder()
-        .date(new Date())
-        .discount(discount)
-        .discountType(discountType)
-        .fee(fee)
-        .build();
-  }
-
-  public static BuyEntity getBuyEntityWithItems(BigDecimal fee, BigDecimal discount, String discountType) {
-    return BuyEntity.builder()
-        .id(1L)
-        .date(new Date())
-        .discount(discount)
-        .discountType(discountType)
-        .fee(fee)
-        .itemEntities(getItemEntities())
         .build();
   }
 
@@ -133,22 +104,5 @@ public class BuilderUtils {
     buy.setItems(items);
     buy.setMapPersonAddFee(mapFee);
     return buy;
-  }
-
-  public static Set<ItemEntity> getItemEntities() {
-    Set<ItemEntity> items = new HashSet<>();
-    items.add(getItemEntity(new BigDecimal(10), "Carla", "Refrigerante"));
-    items.add(getItemEntity(new BigDecimal(35), "Hugo", "Cheeseburguer"));
-    items.add(getItemEntity(new BigDecimal(30), "Carla", "Hamburguer"));
-    return items;
-  }
-
-  public static ItemEntity getItemEntity(BigDecimal amount, String person, String description) {
-    return ItemEntity.builder()
-        .id(new Date().getTime())
-        .descripton(description)
-        .amount(amount)
-        .person(person)
-        .build();
   }
 }

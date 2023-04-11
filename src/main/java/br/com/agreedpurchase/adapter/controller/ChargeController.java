@@ -5,7 +5,7 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 import br.com.agreedpurchase.adapter.controller.request.BuyRequest;
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.service.BuyService;
+import br.com.agreedpurchase.domain.service.ChargeService;
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +17,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/buy")
-public class BuyController {
+@RequestMapping(value = "/charge")
+public class ChargeController {
 
   @Autowired
-  BuyService buyService;
+  ChargeService chargeService;
 
   @PostMapping
   public ResponseEntity<Object> buy(@Valid @RequestBody BuyRequest buyRequest) {
     log.info("Purchase process  initialized");
     Buy buy;
     try {
-      buy = buyService.buy(buyRequest.toModel());
+      //buy = buyService.buy(buyRequest.toModel());
+      chargeService.charge();
       log.info("Successful purchase");
     } catch (BusinessException e) {
       log.error("Error on purchase");
       return new ResponseEntity<>(e.getMessage(), UNPROCESSABLE_ENTITY);
     }
-    return ResponseEntity.ok(buy);
+    return ResponseEntity.ok("");
   }
-
 }

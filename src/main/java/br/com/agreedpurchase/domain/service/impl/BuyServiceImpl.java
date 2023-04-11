@@ -1,42 +1,31 @@
-package br.com.agreedpurchase.domain.service;
+package br.com.agreedpurchase.domain.service.impl;
 
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
 
-import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
-import br.com.agreedpurchase.domain.port.PersistencePort;
+import br.com.agreedpurchase.domain.service.BuyService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class BuyServiceImpl implements BuyService {
 
-  @Autowired
-  PersistencePort persistencePort;
-
   public Buy buy(Buy buy) throws BusinessException {
-    BuyEntity buyEntity = persistencePort.buy(buy.toEntity());
-
-    process(buy, buyEntity);
-
+    process(buy);
     return buy;
   }
 
-  private void process(Buy buy, BuyEntity buyEntity) {
+  private void process(Buy buy) {
     //Agroup amount by person
-    buy.setMapPerson(groupAmountByPerson(buyEntity.toModel()));
+    buy.setMapPerson(groupAmountByPerson(buy));
 
     //Add Fee and Discount
     BigDecimal amount = addFeeAndDiscount(buy);
@@ -45,45 +34,13 @@ public class BuyServiceImpl implements BuyService {
     buy.setMapPersonAddFee(addFeeAndDiscountForPerson(buy, amount));
   }
 
-  public Buy loadById(Long id) throws BusinessException {
-    Buy buy;
-    Optional<BuyEntity> optionalBuyEntity = persistencePort.getBuyEntityById(id);
-    if (optionalBuyEntity.isPresent()) {
-      BuyEntity buyEntity = optionalBuyEntity.get();
-      buy = buyEntity.toModel();
-      process(buy, buyEntity);
-    } else {
-      throw new BusinessException("Purchase Not Found");
-    }
-    return buy;
-  }
-
-  public List<Buy> loadAll() throws BusinessException {
-    Buy buy;
-    List<Buy> list = new ArrayList<>();
-    List<BuyEntity> buyEntities = persistencePort.getBuyEntities();
-    for (BuyEntity buyEntity : buyEntities) {
-      buy = buyEntity.toModel();
-      process(buy, buyEntity);
-      list.add(buy);
-    }
-    return list;
-  }
-
-  public void delete(Long id) throws BusinessException {
-    persistencePort.deleteBuyEntityById(id);
-  }
-
   protected Map<String, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {
     Map<String, BigDecimal> mapPersonAddFee = new HashMap<>();
     for (Map.Entry<String, BigDecimal> entry : buy.getMapPerson().entrySet()) {
       BigDecimal amountAdjustment = calculatePercent(entry.getValue(), amount, getAmountWithoutFees(buy));
       log.info("Adjustment: ".concat(amountAdjustment.toString()));
       mapPersonAddFee.put(entry.getKey(), amountAdjustment);
-      log.info("Person: "
-          .concat(entry.getKey())
-          .concat(" | Amount adjustment: ")
-          .concat(amountAdjustment.toString()));
+      log.info("Amount adjustment: ".concat(amountAdjustment.toString()));
     }
     return mapPersonAddFee;
   }
@@ -123,6 +80,7 @@ public class BuyServiceImpl implements BuyService {
       BigDecimal amount = mapPerson.get(i.getPerson()) == null
           ? i.getAmount() : mapPerson.get(i.getPerson()).add(i.getAmount());
       mapPerson.put(i.getPerson(), amount);
+
     }
     return mapPerson;
   }

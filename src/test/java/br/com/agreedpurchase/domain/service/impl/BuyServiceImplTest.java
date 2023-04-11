@@ -1,25 +1,19 @@
-package br.com.agreedpurchase.domain.service;
+package br.com.agreedpurchase.domain.service.impl;
 
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.INVALID;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
-import static br.com.agreedpurchase.utils.BuilderUtils.getBuyEntityWithItems;
 import static java.math.RoundingMode.HALF_UP;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import br.com.agreedpurchase.adapter.persistence.entity.BuyEntity;
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.port.PersistencePort;
+import br.com.agreedpurchase.domain.port.GerenciaNetPort;
 import br.com.agreedpurchase.utils.BuilderUtils;
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,20 +29,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest(classes = {BuyServiceImpl.class})
 class BuyServiceImplTest {
 
-
-
   @Autowired
   BuyServiceImpl buyService;
 
   @MockBean
-  PersistencePort persistencePort;
+  GerenciaNetPort persistencePort;
 
   @Test
   void shouldSuccessWhenExecuteBuy() {
     BigDecimal amount = new BigDecimal(100);
     BigDecimal discount = new BigDecimal(20);
 
-    when(persistencePort.buy(any())).thenReturn(getBuyEntityWithItems(amount, discount,PERCENT));
+    //when(persistencePort.buy(any())).thenReturn(getBuyEntityWithItems(amount, discount,PERCENT));
     Buy buy = buyService.buy(BuilderUtils.loadBuyWithMapPersonAndFee(PERCENT));
 
     assertNotNull(buy);
@@ -110,35 +102,5 @@ class BuyServiceImplTest {
     assertEquals(2 , mapPerson.size());
   }
 
-  @Test
-  void shouldSuccessWhenLoadById() {
-    Long id = 1L;
-    BigDecimal fee = new BigDecimal(10);
-    BigDecimal discount = new BigDecimal(6);
-    Optional<BuyEntity> optionalBuyEntity =
-        Optional.of(BuilderUtils.getBuyEntityWithItems(fee, discount, DELIVERY));
-
-    when(persistencePort.getBuyEntityById(any())).thenReturn(optionalBuyEntity);
-    buyService.loadById(id);
-    verify(persistencePort).getBuyEntityById(id);
-  }
-
-  @Test
-  void shouldThrowBusinessWhenLoadById() {
-    Long id = 1L;
-    assertThrows(BusinessException.class, () -> buyService.loadById(id));
-  }
-  @Test
-  void shouldSuccessWhenLoadAll() {
-    when(persistencePort.getBuyEntities()).thenReturn(BuilderUtils.loadBuyEntities());
-    buyService.loadAll();
-    verify(persistencePort).getBuyEntities();
-  }
-  @Test
-  void shouldSuccessWhenDelete() {
-    Long id = 1L;
-    buyService.delete(id);
-    verify(persistencePort).deleteBuyEntityById(id);
-  }
 
 }

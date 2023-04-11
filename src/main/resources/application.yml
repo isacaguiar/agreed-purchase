@@ -1,0 +1,16 @@
+server:
+  port: 8082
+
+gnet:
+  client:
+    url: https://api-pix-h.gerencianet.com.br
+    id: Client_Id_037140ff225179e8ed0944b57a128d0d07369cdd
+    secret: Client_Secret_ab400042305f7f37ade079c09118da6047643b81
+    certificate: classpath:certificado.p12
+
+feign:
+  client:
+    config:
+      default:
+       connectTimeout: 160000000
+       readTimeout: 160000000
