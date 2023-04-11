@@ -1,6 +1,6 @@
 package br.com.agreedpurchase.adapter.gnet.client;
 
-import br.com.agreedpurchase.adapter.client.FeignClientConfig;
+import br.com.agreedpurchase.adapter.gnet.config.GerenciaNetApiConfig;
 import br.com.agreedpurchase.adapter.gnet.request.AuthorizeRequest;
 import br.com.agreedpurchase.adapter.gnet.request.ChargeRequest;
 import br.com.agreedpurchase.adapter.gnet.response.AuthorizeResponse;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(
     url = "${gnet.client.url}",
     name = "gnet-api-client",
-    configuration = FeignClientConfig.class
+    configuration = GerenciaNetApiConfig.class
 )
 public interface GerenciaNetApiClient {
 
@@ -24,11 +24,9 @@ public interface GerenciaNetApiClient {
       @RequestHeader("Authorization") String authorization,
       @RequestBody AuthorizeRequest request);
 
-  @PutMapping(path = "/v2/cob/{txid}")
+  @PostMapping(path = "/v2/cob")
   Object charge(
       @RequestHeader("Authorization") String authorization,
-      @PathVariable("txid") String txid,
       @RequestBody ChargeRequest request);
-
 
 }

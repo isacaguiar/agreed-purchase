@@ -70,11 +70,6 @@
 			<artifactId>guava</artifactId>
 			<version>31.1-jre</version>
 		</dependency>
-		<dependency>
-			<groupId>com.github.mifmif</groupId>
-			<artifactId>generex</artifactId>
-			<version>1.0.2</version>
-		</dependency>
 	</dependencies>
 
 	<build>

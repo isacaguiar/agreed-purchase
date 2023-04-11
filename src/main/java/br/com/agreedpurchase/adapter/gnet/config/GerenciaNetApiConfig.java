@@ -1,4 +1,4 @@
-package br.com.agreedpurchase.adapter.client;
+package br.com.agreedpurchase.adapter.gnet.config;
 
 import br.com.agreedpurchase.adapter.gnet.entity.GerenciaNetErrorException;
 import br.com.agreedpurchase.adapter.gnet.entity.GerenciaNetErrorResponse;
@@ -13,12 +13,11 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @Slf4j
-@Configuration
-public class FeignClientConfig {
-
+@Component
+public class GerenciaNetApiConfig {
   @Bean
   public void config() {
     URL url = getClass().getClassLoader().getResource("certificado.p12");
@@ -44,7 +43,7 @@ public class FeignClientConfig {
     Reader reader = null;
     try {
       log.error("Error {}", response);
-      reader = response.body().asReader(Charset.defaultCharset());
+      reader = response.body().asReader();//.asReader(Charset.defaultCharset());
       String result = CharStreams.toString(reader);
       ObjectMapper mapper = new ObjectMapper();
       mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);

@@ -3,9 +3,7 @@ package br.com.agreedpurchase.adapter.gnet.client;
 import br.com.agreedpurchase.adapter.gnet.request.AuthorizeRequest;
 import br.com.agreedpurchase.adapter.gnet.request.ChargeRequest;
 import br.com.agreedpurchase.adapter.gnet.response.AuthorizeResponse;
-import br.com.agreedpurchase.domain.model.Buy;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mifmif.common.regex.Generex;
 import java.util.Base64;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ public class GerenciaNetApiClientWrapper {
   @Autowired
   GerenciaNetApiClient client;
 
-  public AuthorizeResponse generateToken() {
+  public AuthorizeResponse generateCharge() {
 
     String authStr = clientId+":"+clientSecret;
     String base64Creds = Base64.getEncoder().encodeToString(((authStr).getBytes()));
@@ -49,11 +47,7 @@ public class GerenciaNetApiClientWrapper {
       e.printStackTrace();
     }
 
-    String txid;
-    Generex generex = new Generex("[a-zA-Z0-9]{26,35}");
-    txid = generex.random();
-
-    Object object = client.charge("Bearer ".concat(authorizeResponse.getAccessToken()), txid, chargeRequest);
+    Object object = client.charge("Bearer ".concat(authorizeResponse.getAccessToken()), chargeRequest);
 
     return authorizeResponse;
   }
