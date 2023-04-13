@@ -17,7 +17,7 @@ public class PersistenceAdapter implements PersistencePort {
   @Autowired
   BuyRepository buyRepository;
 
-  @Autowired
+  //@Autowired
   UserRepository userRepository;
 
   public BuyEntity buy(BuyEntity buyEntity) {
