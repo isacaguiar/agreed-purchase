@@ -20,19 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 //@RequestMapping(value = "/charge")
 public class ChargeController {
 
-  @Autowired
+  //@Autowired
   ChargeService chargeService;
 
   //@PostMapping
-  public ResponseEntity<Object> buy(@Valid @RequestBody PixRequest pixRequest) {
+  public ResponseEntity<Object> charge(@Valid @RequestBody PixRequest pixRequest) {
     log.info("Purchase process  initialized");
+    PixResponse pixResponse;
     try {
-      PixResponse pixResponse = chargeService.charge(pixRequest);
+      pixResponse = chargeService.charge(pixRequest);
       log.info("Successful purchase");
     } catch (BusinessException e) {
       log.error("Error on purchase");
       return new ResponseEntity<>(e.getMessage(), UNPROCESSABLE_ENTITY);
     }
-    return ResponseEntity.ok("");
+    return ResponseEntity.ok(pixResponse);
   }
 }

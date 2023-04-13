@@ -10,7 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Slf4j
-@Service
+//@Service
 public class PixAdapter implements PixPort {
 
   @Override
