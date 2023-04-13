@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.port.GerenciaNetPort;
 import br.com.agreedpurchase.utils.BuilderUtils;
 import java.math.BigDecimal;
 import java.util.Map;
@@ -22,7 +21,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -31,9 +29,6 @@ class BuyServiceImplTest {
 
   @Autowired
   BuyServiceImpl buyService;
-
-  @MockBean
-  GerenciaNetPort persistencePort;
 
   @Test
   void shouldSuccessWhenExecuteBuy() {
