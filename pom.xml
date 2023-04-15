@@ -80,6 +80,7 @@
 				<version>0.8.7</version>
 				<executions>
 					<execution>
+						<id>prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
@@ -92,11 +93,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<excludes>
-						<exclude>**/infrasctructure/*</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 
 		</plugins>
