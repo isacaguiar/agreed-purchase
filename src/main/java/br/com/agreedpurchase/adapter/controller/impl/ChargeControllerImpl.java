@@ -25,7 +25,7 @@ public class ChargeControllerImpl implements ChargeController {
 
   public ResponseEntity<?> charge(@Valid @RequestBody PixRequest pixRequest) {
     log.info("Purchase process  initialized");
-    PixResponse pixResponse = PixResponse.builder().build();
+    PixResponse pixResponse;
     try {
       pixResponse = chargeService.charge(pixRequest);
       log.info("Successful purchase");

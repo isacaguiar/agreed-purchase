@@ -38,9 +38,9 @@ public class PixVO {
   private String merchantCity;
   private String txid;
   private BigDecimal amount;
-  private static final String formatId = "01";
-  private static final String merchantAccountInformationGui = "br.gov.bcb.pix";
-  private static final String merchantCategoryCode = "0000";
+  private static final String FORMAT_ID = "01";
+  private static final String MERCHANT_ACCOUNT_INFORMATION_GUI = "br.gov.bcb.pix";
+  private static final String MERCANT_CATEGORY_CODE = "0000";
 
   public void setAmount(BigDecimal amount) {
     this.amount = amount == null ?
@@ -55,7 +55,7 @@ public class PixVO {
    */
   public String getMerchantAccountInformation() throws BusinessException {
     //Domínio do banco
-    String gui = getValue(ID_MERCHANT_ACCOUNT_INFORMATION_GUI, merchantAccountInformationGui);
+    String gui = getValue(ID_MERCHANT_ACCOUNT_INFORMATION_GUI, MERCHANT_ACCOUNT_INFORMATION_GUI);
     //Chave Pix
     String key = getValue(ID_MERCHANT_ACCOUNT_INFORMATION_KEY, pixKey);
     //Descrição do pagamento
@@ -98,12 +98,12 @@ public class PixVO {
    */
   public String getPayload() throws BusinessException {
     StringBuilder payload = new StringBuilder()
-        .append(getValue(ID_PAYLOAD_FORMAT_INDICATOR, formatId))
+        .append(getValue(ID_PAYLOAD_FORMAT_INDICATOR, FORMAT_ID))
         .append(getMerchantAccountInformation())
 
-        .append(getValue(ID_MERCHANT_CATEGORY_CODE, merchantCategoryCode))
+        .append(getValue(ID_MERCHANT_CATEGORY_CODE, MERCANT_CATEGORY_CODE))
         .append(getValue(ID_TRANSACTION_CURRENCY, "986"))
-        .append(getValue(ID_TRANSACTION_AMOUNT, String.valueOf(amount.setScale(2, BigDecimal.ROUND_HALF_EVEN))))
+        .append(getValue(ID_TRANSACTION_AMOUNT, String.valueOf(amount.setScale(2, RoundingMode.HALF_EVEN))))
 
         .append(getValue(ID_COUNTRY_CODE, "BR"))
         .append(getValue(ID_MERCHANT_NAME, merchantName))
