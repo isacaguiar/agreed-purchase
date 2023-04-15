@@ -66,7 +66,6 @@ public class PixVO {
 
   /**
    * Método responsável por retornar os valores do campo adicional
-   *
    * @return
    */
   public String getAdditionalDataFieldTemplate() throws Exception {
@@ -77,12 +76,22 @@ public class PixVO {
     return getValue(ID_ADDITIONAL_DATA_FIELD_TEMPLATE, txidValue);
   }
 
+  /**
+   * Método responsável por retornar o payload final com o CRC16
+   * @return
+   * @throws Exception
+   */
   public String getPayloadFinal() throws Exception {
     String payload = getPayload();
     String crc16 = getCRC16();
     return payload.concat(String.valueOf(crc16));
   }
 
+  /**
+   * Método que retorna o payload sem o CRC16
+   * @return
+   * @throws Exception
+   */
   public String getPayload() throws Exception {
     StringBuilder payload = new StringBuilder()
         .append(getValue(ID_PAYLOAD_FORMAT_INDICATOR, formatId))
@@ -110,8 +119,7 @@ public class PixVO {
   }
 
   /**
-   * Retorna o valor do payload
-   *
+   * Retorna o valor para montagem payload
    * @param id
    * @param value
    * @return
@@ -126,20 +134,26 @@ public class PixVO {
     }
   }
 
+  /**
+   * Método que retorna o CRC16
+   * @return
+   * @throws Exception
+   */
   public String getCRC16() throws Exception {
-    //System.out.println("Hard 1: "+calculateCRC16("00020126640014br.gov.bcb.pix011112123456789000226Pagamento do pedido 1234565204000053039865403100.005802BR5913Willian Costa6009SAO PAULO62120508WDEV12346304"));
-    //System.out.println("Hard 2: "+calculateCRC16( "00020126630014br.gov.bcb.pix0111123456789000226Pagamento do pedido 1234565204000053039865406100.005802BR5913Willian Costa6009SAO PAULO62120508WDEV1234"));
-
-
     return String.valueOf(calculateCRC16(getPayload()));
   }
 
+  /**
+   * Método que calcula o CRC16
+   * @param pix
+   * @return
+   */
   public String calculateCRC16(String pix) {
     //Dados definidos pelo BACEN
     int crc = 0xFFFF; // valor inicial do CRC16
     int polynomial = 0x1021; // polinômio usado para calcular o CRC16
 
-    byte[] bytes = pix.getBytes(); // converte a string para um array de bytes
+    byte[] bytes = pix.getBytes(); //converte a string para um array de bytes
 
     for (byte b : bytes) {
       for (int i = 0; i < 8; i++) {
@@ -152,13 +166,7 @@ public class PixVO {
       }
     }
 
-    crc &= 0xffff; // faz um AND para garantir que o valor seja de 16 bits
-
-//    System.out.println("PIX: "+pix);
-//    System.out.printf("%04X\n", crc);
-//    int crcDecimal = Integer.parseInt(String.valueOf(crc), 16);
-//    System.out.println(crcDecimal);
-//    System.out.println("CRC16-CCITT = " + Integer.toHexString(crc));
+    crc &= 0xffff;
     return Integer.toHexString(crc).toUpperCase();
   }
 

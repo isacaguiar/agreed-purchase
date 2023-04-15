@@ -1,5 +1,6 @@
 package br.com.agreedpurchase.adapter.pix.payload;
 
+import br.com.agreedpurchase.adapter.pix.vo.PixVO;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +23,19 @@ public class PixRequest {
 
   @Override
   public String toString() {
-    return "PixPayload{ \"pixKey\" : \""+pixKey+"\", \"description\" : \""+description+"\", " +
+    return "{ \"pixKey\" : \""+pixKey+"\", \"description\" : \""+description+"\", " +
         "\"merchantName\" : \""+merchantName+"\", \"merchantCity\" : \""+merchantCity+"\"," +
         "\"txid\" : \""+txid+"\", \"amount\" : \""+amount+"\"}";
+  }
+
+  public PixVO toVO() {
+    return PixVO.builder()
+        .pixKey(pixKey)
+        .amount(amount)
+        .description(description)
+        .merchantCity(merchantCity)
+        .merchantName(merchantName)
+        .txid(txid)
+        .build();
   }
 }

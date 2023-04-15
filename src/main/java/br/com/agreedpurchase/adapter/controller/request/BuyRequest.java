@@ -1,7 +1,6 @@
 package br.com.agreedpurchase.adapter.controller.request;
 
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.model.Item;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -10,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.BeanUtils;
 
 @Getter
 @Setter
@@ -31,19 +29,19 @@ public class BuyRequest {
         .fee(fee)
         .date(new Date())
         .build();
+    loadItems(buy);
+    return buy;
+  }
 
+  private void loadItems(Buy buy) {
     if(this.itemRequests != null) {
       for(ItemRequest source : itemRequests) {
-        Item target = Item.builder().build();
-        BeanUtils.copyProperties(source , target);
         if (buy.getItems() == null) {
           buy.setItems(new HashSet<>());
         }
-        buy.getItems().add(target);
+        buy.getItems().add(source.toModel());
       }
     }
-
-    return buy;
   }
 
 }

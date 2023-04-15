@@ -8,11 +8,11 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+import br.com.agreedpurchase.adapter.pix.payload.PixRequest;
+import br.com.agreedpurchase.adapter.pix.payload.PixResponse;
 import br.com.agreedpurchase.domain.exception.BusinessException;
 import br.com.agreedpurchase.domain.model.Buy;
-import br.com.agreedpurchase.domain.service.BuyService;
-import br.com.agreedpurchase.domain.service.impl.BuyServiceImpl;
+import br.com.agreedpurchase.domain.service.ChargeService;
 import br.com.agreedpurchase.utils.BuilderUtils;
 import br.com.agreedpurchase.utils.FileUtils;
 import br.com.agreedpurchase.utils.JSONUtils;
@@ -28,49 +28,50 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest({BuyController.class})
+@WebMvcTest({ChargeController.class})
 @AutoConfigureMockMvc
-class BuyControllerTest {
+class ChargeControllerTest {
 
   @Autowired
   private MockMvc mvc;
 
   @MockBean
-  BuyService buyService;
+  private ChargeService chargeService;
 
-  final String PATH = "/buy";
+  final String PATH = "/charge";
 
   @Test
-  void buyWithSuccess() throws Exception {
+  void chargeWithSuccess() throws Exception {
 
-    Buy buy = BuilderUtils.loadBuyWithMapPersonAndFee(PERCENT);
+    String copyPaste =
+        "00020126510014br.gov.bcb.pix0120isacaugiar@gmail.com0205Teste520400005303986540510.005802BR5911Isac Aguiar6008Salvador62100506string6304D141";
 
-    when(buyService.buy(any())).thenReturn(buy);
+    PixResponse pix = BuilderUtils.getPixResponse(copyPaste);
+
+    when(chargeService.charge(any())).thenReturn(pix);
 
     MvcResult result = mvc.perform(
             post(PATH)
-                .content(FileUtils.loadRequest("buy"))
+                .content(FileUtils.loadRequest("charge"))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful())
-                .andReturn();
+        .andExpect(status().is2xxSuccessful())
+        .andReturn();
     String content = result.getResponse().getContentAsString();
 
-    Buy buyResponse =
-        JSONUtils.toPurchaseResponse(content);
+    PixResponse pixResponse =
+        JSONUtils.toPixResponse(content);
 
-    assertNotNull(buyResponse);
-    assertNotNull(buyResponse.getDiscountType());
-    assertEquals(2, buyResponse.getMapPerson().size());
-    assertEquals(2, buyResponse.getMapPersonAddFee().size());
+    assertNotNull(pixResponse);
+    assertNotNull(pixResponse.getCopyPaste());
   }
 
   @Test
-  void buyWithError() throws Exception {
-    when(buyService.buy(any())).thenThrow(BusinessException.class);
+  void chargeWithError() throws Exception {
+    when(chargeService.charge(any())).thenThrow(BusinessException.class);
 
     mvc.perform(
             post(PATH)
-                .content(FileUtils.loadRequest("buy"))
+                .content(FileUtils.loadRequest("charge"))
                 .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().is4xxClientError());
   }

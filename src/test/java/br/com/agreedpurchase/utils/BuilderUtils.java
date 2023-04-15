@@ -3,6 +3,8 @@ package br.com.agreedpurchase.utils;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.DELIVERY;
 import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
 
+import br.com.agreedpurchase.adapter.pix.payload.PixRequest;
+import br.com.agreedpurchase.adapter.pix.payload.PixResponse;
 import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.model.Item;
 import java.math.BigDecimal;
@@ -56,6 +58,38 @@ public class BuilderUtils {
         .amount(amount)
         .person(person)
         .build();
+  }
+
+  public static PixResponse getPixResponse(String copyPaste) {
+    return PixResponse.builder()
+        .copyPaste(copyPaste)
+        .build();
+  }
+
+  public static PixRequest getPixRequest(String pixKey,
+                                          String description,
+                                          String merchantName,
+                                          String merchantCity,
+                                          String txid,
+                                          BigDecimal amount) {
+    return PixRequest.builder()
+        .pixKey(pixKey)
+        .merchantName(merchantName)
+        .merchantCity(merchantCity)
+        .description(description)
+        .txid(txid)
+        .amount(amount)
+        .build();
+  }
+
+  public static PixRequest loadPixRequest() {
+    String pixKey = "isacaguiar@gmail.com";
+    String description = "Test Agreed Purcharse";
+    String merchantName = "Isac Aguiar";
+    String merchantCity = "Salvador";
+    String txid = "IVCA-23456987";
+    BigDecimal amount = new BigDecimal(10);
+    return getPixRequest(pixKey,description,merchantName,merchantCity,txid,amount);
   }
 
   public static Buy loadBuy(String discountType) {

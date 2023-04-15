@@ -18,14 +18,9 @@ import lombok.Setter;
 public class Buy {
   private BigDecimal fee;
   private BigDecimal discount;
-
   private String discountType;
-
   private Date date;
-
   private Set<Item> items;
-
   Map<String, BigDecimal> mapPerson;
-
   Map<String, BigDecimal> mapPersonAddFee;
 }
