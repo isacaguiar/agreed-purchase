@@ -23,9 +23,10 @@ public class PixRequest {
 
   @Override
   public String toString() {
-    return "{ \"pixKey\" : \""+pixKey+"\", \"description\" : \""+description+"\", " +
-        "\"merchantName\" : \""+merchantName+"\", \"merchantCity\" : \""+merchantCity+"\"," +
-        "\"txid\" : \""+txid+"\", \"amount\" : \""+amount+"\"}";
+    String value = "{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", ";
+    value.concat("\"merchantName\" : \"" + merchantName + "\", \"merchantCity\" : \"" + merchantCity + "\",");
+    value.concat("\"txid\" : \"" + txid + "\", \"amount\" : \"" + amount + "\"}");
+    return value;
   }
 
   public PixVO toVO() {

@@ -89,7 +89,7 @@ public class BuilderUtils {
     String merchantCity = "Salvador";
     String txid = "IVCA-23456987";
     BigDecimal amount = new BigDecimal(10);
-    return getPixRequest(pixKey,description,merchantName,merchantCity,txid,amount);
+    return getPixRequest(pixKey, description, merchantName, merchantCity, txid, amount);
   }
 
   public static Buy loadBuy(String discountType) {

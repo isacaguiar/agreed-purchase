@@ -43,15 +43,12 @@ public class PixVO {
   private static final String MERCANT_CATEGORY_CODE = "0000";
 
   public void setAmount(BigDecimal amount) {
-    this.amount = amount == null ?
-        new BigDecimal("0.00") :
-        amount.setScale(2, RoundingMode.HALF_EVEN);
+    this.amount = ((amount == null)
+        ? new BigDecimal("0.00") : amount.setScale(2, RoundingMode.HALF_EVEN));
   }
 
   /**
-   * Método respons[avel por retornar valores da conta
-   *
-   * @return
+   * Método respons[avel por retornar valores da conta.
    */
   public String getMerchantAccountInformation() throws BusinessException {
     //Domínio do banco
@@ -60,7 +57,7 @@ public class PixVO {
     String key = getValue(ID_MERCHANT_ACCOUNT_INFORMATION_KEY, pixKey);
     //Descrição do pagamento
     String desc = "";
-    if (description !=null && !"".equals(description)) {
+    if (description != null && !"".equals(description)) {
       desc = getValue(ID_MERCHANT_ACCOUNT_INFORMATION_DESCRIPTION, description);
     }
 
@@ -69,8 +66,7 @@ public class PixVO {
   }
 
   /**
-   * Método responsável por retornar os valores do campo adicional
-   * @return
+   * Método responsável por retornar os valores do campo adicional.
    */
   public String getAdditionalDataFieldTemplate() throws BusinessException {
     //TXID
@@ -81,9 +77,7 @@ public class PixVO {
   }
 
   /**
-   * Método responsável por retornar o payload final com o CRC16
-   * @return
-   * @throws Exception
+   * Método responsável por retornar o payload final com o CRC16.
    */
   public String getPayloadFinal()  {
     String payload = getPayload();
@@ -92,9 +86,7 @@ public class PixVO {
   }
 
   /**
-   * Método que retorna o payload sem o CRC16
-   * @return
-   * @throws Exception
+   * Método que retorna o payload sem o CRC16.
    */
   public String getPayload() throws BusinessException {
     StringBuilder payload = new StringBuilder()
@@ -115,18 +107,14 @@ public class PixVO {
 
   @Override
   public String toString() {
-    return "PixPayload{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description +
-        "\", " +
-        "\"merchantName\" : \"" + merchantName + "\", \"merchantCity\" : \"" + merchantCity +
-        "\"," +
-        "\"txid\" : \"" + txid + "\", \"amount\" : \"" + amount + "\"}";
+    String value = "PixPayload{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", "
+        .concat("\"merchantName\" : \"" + merchantName + "\", \"merchantCity\" : \"" + merchantCity + "\",")
+        .concat("\"txid\" : \"" + txid + "\", \"amount\" : \"" + amount + "\"}");
+    return value;
   }
 
   /**
-   * Retorna o valor para montagem payload
-   * @param id
-   * @param value
-   * @return
+   * Retorna o valor para montagem payload.
    */
   public String getValue(String id, String value) {
     try {
@@ -139,18 +127,14 @@ public class PixVO {
   }
 
   /**
-   * Método que retorna o CRC16
-   * @return
-   * @throws Exception
+   * Método que retorna o CRC16.
    */
   public String getCRC16() throws BusinessException {
     return String.valueOf(calculateCRC16(getPayload()));
   }
 
   /**
-   * Método que calcula o CRC16
-   * @param pix
-   * @return
+   * Método que calcula o CRC16.
    */
   public String calculateCRC16(String pix) {
     //Dados definidos pelo BACEN

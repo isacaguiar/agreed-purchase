@@ -34,8 +34,8 @@ public class BuyRequest {
   }
 
   private void loadItems(Buy buy) {
-    if(this.itemRequests != null) {
-      for(ItemRequest source : itemRequests) {
+    if (this.itemRequests != null) {
+      for (ItemRequest source : itemRequests) {
         if (buy.getItems() == null) {
           buy.setItems(new HashSet<>());
         }

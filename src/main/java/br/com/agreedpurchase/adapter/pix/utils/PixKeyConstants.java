@@ -1,14 +1,15 @@
 package br.com.agreedpurchase.adapter.pix.utils;
 
-public final class PixKeyConstants {
+/**
+ * IDs do Payload do Pix.
+ */
+public class PixKeyConstants {
 
   private PixKeyConstants() {
-
+    throw new IllegalStateException("Utility class");
   }
 
-  /**
-   * IDs do Payload do Pix
-   */
+
   public static final String ID_PAYLOAD_FORMAT_INDICATOR = "00";
   public static final String  ID_MERCHANT_ACCOUNT_INFORMATION = "26";
   public static final String  ID_MERCHANT_ACCOUNT_INFORMATION_GUI = "00";

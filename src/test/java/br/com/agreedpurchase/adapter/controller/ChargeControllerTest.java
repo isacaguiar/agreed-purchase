@@ -1,17 +1,13 @@
 package br.com.agreedpurchase.adapter.controller;
 
-import static br.com.agreedpurchase.domain.utils.ConstantsUtils.PERCENT;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import br.com.agreedpurchase.adapter.pix.payload.PixRequest;
 import br.com.agreedpurchase.adapter.pix.payload.PixResponse;
 import br.com.agreedpurchase.domain.exception.BusinessException;
-import br.com.agreedpurchase.domain.model.Buy;
 import br.com.agreedpurchase.domain.service.ChargeService;
 import br.com.agreedpurchase.utils.BuilderUtils;
 import br.com.agreedpurchase.utils.FileUtils;

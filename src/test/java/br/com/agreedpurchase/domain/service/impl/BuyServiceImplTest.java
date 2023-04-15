@@ -65,7 +65,7 @@ class BuyServiceImplTest {
     BigDecimal actual = buyService.addFeeAndDiscount(BuilderUtils.loadBuy(discountType));
 
     assertNotNull(actual);
-    assertEquals(actual.setScale(2, HALF_UP), expected.setScale(2, HALF_UP));//PERCENT - new BigDecimal(74.50)
+    assertEquals(actual.setScale(2, HALF_UP), expected.setScale(2, HALF_UP));
   }
 
   @Test
@@ -94,7 +94,7 @@ class BuyServiceImplTest {
     Map<String, BigDecimal> mapPerson =
         buyService.groupAmountByPerson(BuilderUtils.loadBuy(PERCENT));
     assertNotNull(mapPerson);
-    assertEquals(2 , mapPerson.size());
+    assertEquals(2, mapPerson.size());
   }
 
 

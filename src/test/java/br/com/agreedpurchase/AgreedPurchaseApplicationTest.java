@@ -1,6 +1,6 @@
 package br.com.agreedpurchase;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,7 +11,7 @@ class AgreedPurchaseApplicationTest {
 
   @Test
   void testConfigure() {
-    String[] args = new String[] {};
+    String[] args = new String[]{};
     Runnable runnable = () -> AgreedPurchaseApplication.main(args);
 
     AgreedPurchaseApplication.main(args);

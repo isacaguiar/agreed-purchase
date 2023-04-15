@@ -55,7 +55,7 @@ public class BuyServiceImpl implements BuyService {
         log.info("Applied delivery: ".concat(amount.toString()));
         break;
       case PERCENT:
-        amount = amount.add(calculatePercent(amount , buy.getDiscount(), new BigDecimal(100)));
+        amount = amount.add(calculatePercent(amount, buy.getDiscount(), new BigDecimal(100)));
         log.info("Applied percent: ".concat(amount.toString()));
         break;
       default:
@@ -66,7 +66,7 @@ public class BuyServiceImpl implements BuyService {
 
   protected BigDecimal getAmountWithoutFees(Buy buy) {
     BigDecimal amount = new BigDecimal(0);
-    if(buy.getItems() != null) {
+    if (buy.getItems() != null) {
       for (Item item : buy.getItems()) {
         amount = amount.add(item.getAmount());
       }
@@ -76,7 +76,7 @@ public class BuyServiceImpl implements BuyService {
 
   protected Map<String, BigDecimal> groupAmountByPerson(Buy buy) {
     Map<String, BigDecimal> mapPerson = new HashMap<>();
-    for ( Item i : buy.getItems() ) {
+    for (Item i : buy.getItems()) {
       BigDecimal amount = mapPerson.get(i.getPerson()) == null
           ? i.getAmount() : mapPerson.get(i.getPerson()).add(i.getAmount());
       mapPerson.put(i.getPerson(), amount);
