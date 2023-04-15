@@ -1,6 +1,6 @@
 package br.com.agreedpurchase.adapter.pix.utils;
 
-public abstract class PixKeyConstants {
+public final class PixKeyConstants {
 
   /**
    * IDs do Payload do Pix
