@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface BuyController {
 
-  @CrossOrigin
+  @CrossOrigin(origins = "http://localhost:8080")
   @PostMapping
   ResponseEntity<?> buy(@Valid @RequestBody BuyRequest buyRequest);
 

@@ -93,6 +93,12 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<excludes>
+						<exclude>**/infrasctructure/*</exclude>
+						<exclude>**/utils/*</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 
 		</plugins>

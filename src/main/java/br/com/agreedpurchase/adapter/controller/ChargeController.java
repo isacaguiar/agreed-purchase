@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface ChargeController {
 
-  @CrossOrigin
+  @CrossOrigin(origins = "http://localhost:8080")
   @PostMapping
   ResponseEntity<?> charge(@Valid @RequestBody PixRequest pixRequest);
 }
