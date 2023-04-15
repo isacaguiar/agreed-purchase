@@ -15,7 +15,9 @@ import static br.com.agreedpurchase.adapter.pix.utils.PixKeyConstants.ID_PAYLOAD
 import static br.com.agreedpurchase.adapter.pix.utils.PixKeyConstants.ID_TRANSACTION_AMOUNT;
 import static br.com.agreedpurchase.adapter.pix.utils.PixKeyConstants.ID_TRANSACTION_CURRENCY;
 
+import br.com.agreedpurchase.domain.exception.BusinessException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,14 +38,14 @@ public class PixVO {
   private String merchantCity;
   private String txid;
   private BigDecimal amount;
-  private final String formatId = "01";
-  private final String merchantAccountInformationGui = "br.gov.bcb.pix";
-  private final String merchantCategoryCode = "0000";
+  private static final String formatId = "01";
+  private static final String merchantAccountInformationGui = "br.gov.bcb.pix";
+  private static final String merchantCategoryCode = "0000";
 
   public void setAmount(BigDecimal amount) {
     this.amount = amount == null ?
-        new BigDecimal(0).setScale(2, BigDecimal.ROUND_HALF_EVEN) :
-        amount.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        new BigDecimal("0.00") :
+        amount.setScale(2, RoundingMode.HALF_EVEN);
   }
 
   /**
@@ -51,7 +53,7 @@ public class PixVO {
    *
    * @return
    */
-  public String getMerchantAccountInformation() throws Exception {
+  public String getMerchantAccountInformation() throws BusinessException {
     //Domínio do banco
     String gui = getValue(ID_MERCHANT_ACCOUNT_INFORMATION_GUI, merchantAccountInformationGui);
     //Chave Pix
@@ -70,7 +72,7 @@ public class PixVO {
    * Método responsável por retornar os valores do campo adicional
    * @return
    */
-  public String getAdditionalDataFieldTemplate() throws Exception {
+  public String getAdditionalDataFieldTemplate() throws BusinessException {
     //TXID
     String txidValue = getValue(ID_ADDITIONAL_DATA_FIELD_TEMPLATE_TXID, txid);
 
@@ -83,7 +85,7 @@ public class PixVO {
    * @return
    * @throws Exception
    */
-  public String getPayloadFinal() throws Exception {
+  public String getPayloadFinal()  {
     String payload = getPayload();
     String crc16 = getCRC16();
     return payload.concat(String.valueOf(crc16));
@@ -94,7 +96,7 @@ public class PixVO {
    * @return
    * @throws Exception
    */
-  public String getPayload() throws Exception {
+  public String getPayload() throws BusinessException {
     StringBuilder payload = new StringBuilder()
         .append(getValue(ID_PAYLOAD_FORMAT_INDICATOR, formatId))
         .append(getMerchantAccountInformation())
@@ -132,7 +134,7 @@ public class PixVO {
       return id.concat(aux).concat(value);
     } catch (Exception e) {
       log.error(e.getMessage());
-      throw e;
+      throw new BusinessException(e.getMessage());
     }
   }
 
@@ -141,7 +143,7 @@ public class PixVO {
    * @return
    * @throws Exception
    */
-  public String getCRC16() throws Exception {
+  public String getCRC16() throws BusinessException {
     return String.valueOf(calculateCRC16(getPayload()));
   }
 
