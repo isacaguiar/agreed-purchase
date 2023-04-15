@@ -11,6 +11,6 @@ public interface BuyController {
 
   @CrossOrigin(origins = "http://localhost:8080")
   @PostMapping
-  ResponseEntity<?> buy(@Valid @RequestBody BuyRequest buyRequest);
+  ResponseEntity<Object> buy(@Valid @RequestBody BuyRequest buyRequest);
 
 }

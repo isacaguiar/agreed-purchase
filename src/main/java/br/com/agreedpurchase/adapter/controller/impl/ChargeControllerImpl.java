@@ -23,7 +23,7 @@ public class ChargeControllerImpl implements ChargeController {
   @Autowired
   ChargeService chargeService;
 
-  public ResponseEntity<?> charge(@Valid @RequestBody PixRequest pixRequest) {
+  public ResponseEntity<Object> charge(@Valid @RequestBody PixRequest pixRequest) {
     log.info("Purchase process  initialized");
     PixResponse pixResponse;
     try {

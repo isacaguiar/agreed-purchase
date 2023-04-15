@@ -23,7 +23,7 @@ public class BuyControllerImpl implements BuyController {
   @Autowired
   BuyService buyService;
 
-  public ResponseEntity<?> buy(@Valid @RequestBody BuyRequest buyRequest) {
+  public ResponseEntity<Object> buy(@Valid @RequestBody BuyRequest buyRequest) {
     log.info("Purchase process  initialized");
     Buy buy;
     try {

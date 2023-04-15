@@ -11,5 +11,5 @@ public interface ChargeController {
 
   @CrossOrigin(origins = "http://localhost:8080")
   @PostMapping
-  ResponseEntity<?> charge(@Valid @RequestBody PixRequest pixRequest);
+  ResponseEntity<Object> charge(@Valid @RequestBody PixRequest pixRequest);
 }
