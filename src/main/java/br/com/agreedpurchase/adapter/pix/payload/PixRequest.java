@@ -23,9 +23,9 @@ public class PixRequest {
 
   @Override
   public String toString() {
-    String value = "{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", ";
-    value.concat("\"merchantName\" : \"" + merchantName + "\", \"merchantCity\" : \"" + merchantCity + "\",");
-    value.concat("\"txid\" : \"" + txid + "\", \"amount\" : \"" + amount + "\"}");
+    String value = "{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", "
+        .concat("\"merchantName\" : \"" + merchantName + "\", \"merchantCity\" : \"" + merchantCity + "\",")
+        .concat("\"txid\" : \"" + txid + "\", \"amount\" : \"" + amount + "\"}");
     return value;
   }
 
