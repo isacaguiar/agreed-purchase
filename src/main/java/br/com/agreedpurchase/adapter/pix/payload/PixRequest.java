@@ -23,10 +23,9 @@ public class PixRequest {
 
   @Override
   public String toString() {
-    String value = "{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", "
+    return "{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", "
         .concat("\"merchantName\" : \"" + merchantName + "\", \"merchantCity\" : \"" + merchantCity + "\",")
         .concat("\"txid\" : \"" + txid + "\", \"amount\" : \"" + amount + "\"}");
-    return value;
   }
 
   public PixVO toVO() {

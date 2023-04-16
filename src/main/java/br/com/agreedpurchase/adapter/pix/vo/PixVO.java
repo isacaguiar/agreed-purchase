@@ -107,10 +107,9 @@ public class PixVO {
 
   @Override
   public String toString() {
-    String value = "PixPayload{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", "
+    return "{ \"pixKey\" : \"" + pixKey + "\", \"description\" : \"" + description + "\", "
         .concat("\"merchantName\" : \"" + merchantName + "\", \"merchantCity\" : \"" + merchantCity + "\",")
         .concat("\"txid\" : \"" + txid + "\", \"amount\" : \"" + amount + "\"}");
-    return value;
   }
 
   /**
