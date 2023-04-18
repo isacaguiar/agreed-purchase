@@ -34,7 +34,7 @@ public class BuyServiceImpl implements BuyService {
     buy.setMapPersonAddFee(addFeeAndDiscountForPerson(buy, amount));
   }
 
-  protected Map<String, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {
+  private Map<String, BigDecimal> addFeeAndDiscountForPerson(Buy buy, BigDecimal amount) {
     Map<String, BigDecimal> mapPersonAddFee = new HashMap<>();
     for (Map.Entry<String, BigDecimal> entry : buy.getMapPerson().entrySet()) {
       BigDecimal amountAdjustment = calculatePercent(entry.getValue(), amount, getAmountWithoutFees(buy));
@@ -45,7 +45,7 @@ public class BuyServiceImpl implements BuyService {
     return mapPersonAddFee;
   }
 
-  protected BigDecimal addFeeAndDiscount(Buy buy) throws BusinessException {
+  private BigDecimal addFeeAndDiscount(Buy buy) throws BusinessException {
     BigDecimal amount = getAmountWithoutFees(buy);
     log.info("Amount: ".concat(amount.toString()));
 
@@ -64,7 +64,7 @@ public class BuyServiceImpl implements BuyService {
     return amount.subtract(buy.getDiscount());
   }
 
-  protected BigDecimal getAmountWithoutFees(Buy buy) {
+  private BigDecimal getAmountWithoutFees(Buy buy) {
     BigDecimal amount = new BigDecimal(0);
     if (buy.getItems() != null) {
       for (Item item : buy.getItems()) {
@@ -74,7 +74,7 @@ public class BuyServiceImpl implements BuyService {
     return amount.setScale(2, RoundingMode.HALF_UP);
   }
 
-  protected Map<String, BigDecimal> groupAmountByPerson(Buy buy) {
+  private Map<String, BigDecimal> groupAmountByPerson(Buy buy) {
     Map<String, BigDecimal> mapPerson = new HashMap<>();
     for (Item i : buy.getItems()) {
       BigDecimal amount = mapPerson.get(i.getPerson()) == null
