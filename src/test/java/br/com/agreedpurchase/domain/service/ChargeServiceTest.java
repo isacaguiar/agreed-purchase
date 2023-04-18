@@ -1,8 +1,6 @@
 package br.com.agreedpurchase.domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -11,7 +9,6 @@ import br.com.agreedpurchase.adapter.pix.payload.PixResponse;
 import br.com.agreedpurchase.domain.port.PixPort;
 import br.com.agreedpurchase.domain.service.impl.ChargeServiceImpl;
 import br.com.agreedpurchase.utils.BuilderUtils;
-import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
